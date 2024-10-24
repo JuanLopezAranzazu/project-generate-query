@@ -29,4 +29,9 @@ def validate_json_structure(data):
     if not isinstance(field_key, str) or not isinstance(field_value, str):
       raise TypeError(f"Las claves y valores en 'fields' deben ser de tipo str.")
 
+   # Validar que 'exclude_quotes' contenga claves válidas de 'fields'
+  for exclude in data["exclude_quotes"]:
+    if exclude not in data["fields"]:
+      raise ValueError(f"'{exclude}' no es una clave válida en 'fields'.")
+
   return True  # La estructura es válida
