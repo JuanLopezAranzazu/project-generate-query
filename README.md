@@ -1,4 +1,4 @@
-## Proyecto Query Excel
+## Proyecto generador de query SQL
 
 ### Descripción:
 
