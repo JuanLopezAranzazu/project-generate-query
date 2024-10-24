@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-from utils.create_query import read_excel, create_insert_query
-from utils.get_config import load_config
+from utils.create_query import read_excel, read_csv, create_insert_query
+from utils.config import load_config, validate_json_structure
 
 class App:
   def __init__(self, root):
@@ -62,14 +62,17 @@ class App:
       return
 
     try:
+      # Cargar y validar la configuración
       self.config = load_config(file_path)
+      validate_json_structure(self.config)
+      
       messagebox.showinfo("Información", f"Se ha cargado el archivo {file_path} con éxito")
     except Exception as e:
       messagebox.showerror("Error", str(e))
 
   def on_create_query(self):
-    # Seleccionar el archivo de Excel
-    file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+    # Seleccionar el archivo de Excel o CSV
+    file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx"), ("CSV files", "*.csv")])
 
     if not file_path:
       return
@@ -80,9 +83,12 @@ class App:
       TABLE_NAME = self.config.get("table_name")
       FIELDS = self.config.get("fields")
       EXCLUDE_QUOTES = self.config.get("exclude_quotes")
-      # Leer el archivo de Excel
-      df = read_excel(file_path, sheet_name=SHEET_NAME)
+
+      # Validar si el archivo es CSV o Excel
+      df = read_excel(file_path, sheet_name=SHEET_NAME) if file_path.endswith(".xlsx") else read_csv(file_path)
       query = create_insert_query(TABLE_NAME, FIELDS, EXCLUDE_QUOTES, df=df)
+
+      # Mostrar el query en el campo de resultados
       self.text_results.delete("1.0", tk.END)
       self.text_results.insert(tk.END, query)
     except Exception as e:

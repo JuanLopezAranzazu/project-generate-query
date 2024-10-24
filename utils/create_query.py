@@ -4,6 +4,10 @@ import pandas as pd
 def read_excel(file_path, sheet_name):
   return pd.read_excel(file_path, sheet_name=sheet_name)
 
+# Función para leer el archivo CSV
+def read_csv(file_path):
+  return pd.read_csv(file_path)
+
 # Función para crear una query de inserción
 def create_insert_query(table_name=None, fields=None, exclude_quotes=None, df=None):
   if df is None:

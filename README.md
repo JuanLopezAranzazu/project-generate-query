@@ -2,7 +2,7 @@
 
 ### Descripción:
 
-Programa para leer archivos excel y generar queries para insertar datos SQL
+Programa para generar queries de inserción SQL por medio de archivos Excel y CSV
 
 ### Crear entorno virtual
 
@@ -28,13 +28,12 @@ Para cargar los datos de configuración JSON se debe hacer con la siguiente estr
 ```json
 {
   "sheet_name": "NombreDeLaHoja",
-  "table_name": "nombre_tabla",
+  "table_name": "NombreDeLaTabla",
   "fields": {
-    "columna1": "campo1",
-    "columna2": "campo2",
-    "columna3": "campo3"
+    "nombreColumna1": "nombreColumna1Query",
+    "nombreColumna2": "nombreColumna2Query"
   },
-  "exclude_quotes": ["columna3"]
+  "exclude_quotes": ["nombreColumna2"]
 }
 ```
 
